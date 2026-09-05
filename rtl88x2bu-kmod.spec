@@ -13,13 +13,15 @@
 
 Name:           %{kmod_name}-kmod
 Version:        0.%{commitdate}git%{shortcommit}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Realtek RTL8812BU/RTL8822BU USB Wi-Fi kernel module
 
 License:        GPL-2.0-only
 URL:            https://github.com/RinCat/RTL88x2BU-Linux-Driver
 Source0:        %{url}/archive/%{commit}/%{repo_name}-%{commit}.tar.gz
 Source1:        rtw8822bu.conf
+
+Patch0:         0001-Fix-interface-name-registration-race.patch
 
 %global AkmodsBuildRequires gcc, make, elfutils-libelf-devel, xz, bc
 BuildRequires:  kmodtool
@@ -51,6 +53,7 @@ kmodtool --target %{_target_cpu} --kmodname %{kmod_name} %{?buildforkernels:--%{
 
 
 %setup -q -c
+%patch -P 0 -p 1 -d %{repo_name}-%{commit}
 
 for kernel_version in %{?kernel_versions}; do
     cp -a %{repo_name}-%{commit} _kmod_build_${kernel_version%%___*}
