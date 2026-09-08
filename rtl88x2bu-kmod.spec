@@ -7,21 +7,19 @@
 %global kmod_name rtl88x2bu
 %global module_name 88x2bu
 %global repo_name RTL88x2BU-Linux-Driver
-%global commit 153fdc5853d9c377e5229bce000c7d01157f7703
-%global commitdate 20260826
+%global commit 0026128fa37398416bc14a3220e85596b84cf6c7
+%global commitdate 20260905
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           %{kmod_name}-kmod
 Version:        0.%{commitdate}git%{shortcommit}
-Release:        2%{?dist}
+Release:        1%{?dist}
 Summary:        Realtek RTL8812BU/RTL8822BU USB Wi-Fi kernel module
 
 License:        GPL-2.0-only
 URL:            https://github.com/RinCat/RTL88x2BU-Linux-Driver
 Source0:        %{url}/archive/%{commit}/%{repo_name}-%{commit}.tar.gz
 Source1:        rtw8822bu.conf
-
-Patch0:         0001-Fix-interface-name-registration-race.patch
 
 %global AkmodsBuildRequires gcc, make, elfutils-libelf-devel, xz, bc
 BuildRequires:  kmodtool
@@ -51,9 +49,7 @@ Common modprobe configuration for the packaged %{kmod_name} kernel module.
 # Print generated package template for build logs/debugging.
 kmodtool --target %{_target_cpu} --kmodname %{kmod_name} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null
 
-
 %setup -q -c
-%patch -P 0 -p 1 -d %{repo_name}-%{commit}
 
 for kernel_version in %{?kernel_versions}; do
     cp -a %{repo_name}-%{commit} _kmod_build_${kernel_version%%___*}
