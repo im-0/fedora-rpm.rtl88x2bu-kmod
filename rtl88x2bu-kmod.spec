@@ -13,7 +13,7 @@
 
 Name:           %{kmod_name}-kmod
 Version:        0.%{commitdate}git%{shortcommit}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Realtek RTL8812BU/RTL8822BU USB Wi-Fi kernel module
 
 License:        GPL-2.0-only
@@ -83,7 +83,7 @@ done
 
 
 %files -n %{pkg_kmod_name}-common
-%{_modprobedir}/rtw8822bu.conf
+%config(noreplace) %{_modprobedir}/rtw8822bu.conf
 
 
 %changelog
