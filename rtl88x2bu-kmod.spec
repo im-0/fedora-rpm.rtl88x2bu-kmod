@@ -13,7 +13,7 @@
 
 Name:           %{kmod_name}-kmod
 Version:        0.%{commitdate}git%{shortcommit}
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Realtek RTL8812BU/RTL8822BU USB Wi-Fi kernel module
 
 License:        GPL-2.0-only
@@ -70,7 +70,7 @@ done
 
 %install
 install -Dpm0644 %{SOURCE1} \
-    %{buildroot}%{_modprobedir}/rtw8822bu.conf
+    %{buildroot}%{_sysconfdir}/modprobe.d/rtw8822bu.conf
 
 for kernel_version in %{?kernel_versions}; do
     kver=${kernel_version%%___*}
@@ -83,7 +83,7 @@ done
 
 
 %files -n %{pkg_kmod_name}-common
-%config(noreplace) %{_modprobedir}/rtw8822bu.conf
+%config(noreplace) %{_sysconfdir}/modprobe.d/rtw8822bu.conf
 
 
 %changelog
